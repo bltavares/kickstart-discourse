@@ -17,9 +17,9 @@ params:
 
 env:
   # comma-separated emails
-  DISCOURSE_DEVELOPER_EMAILS: 'connect+discourse@bltavares.com'
+  DISCOURSE_DEVELOPER_EMAILS: 'admin@example.com'
   # CHANGE ME to your hostname
-  DISCOURSE_HOSTNAME: 'discourse.bltavares.com'
+  DISCOURSE_HOSTNAME: 'www.example.com'
   # SET ME to your smtp server eg mandrill
   # don't forget to set mail
   DISCOURSE_SMTP_ADDRESS: smtp.example.com          # (mandatory)
