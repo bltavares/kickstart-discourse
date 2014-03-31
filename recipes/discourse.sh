@@ -1,16 +1,19 @@
 source recipes/docker.sh
 kickstart.context Discourse
 
+install_dir=/var/docker
+
 kickstart.package.install git
 
-mkdir -p /var/docker
-[ -d /var/docker/.git ] || git clone https://github.com/discourse/discourse_docker.git /var/docker
+mkdir -p $install_dir
+[ -d $install_dir/.git ] || git clone https://github.com/discourse/discourse_docker.git $install_dir
 
-cp files/standalone.yml /var/docker/containers/app.yml
+install_dir=$install_dir \
+  kickstart.file.template files/standalone.yml.template > $install_dir/containers/app.yml
 (
-cd /var/docker
-git pull --rebase
-./launcher bootstrap app
-./launcher stop app
-./launcher start app
+  cd $install_dir
+  git pull --rebase
+  ./launcher bootstrap app
+  ./launcher stop app
+  ./launcher start app
 )

@@ -30,7 +30,7 @@ env:
 # These containers are stateless, all the data is stored in /shared
 volumes:
   - volume:
-      host: /var/docker/shared/standalone
+      host: $install_dir/shared/standalone
       guest: /shared
 
 # you may use the docker manager to upgrade and monitor your docker image
@@ -38,7 +38,7 @@ volumes:
 hooks:
   after_code:
     - exec:
-        cd: $home/plugins
+        cd: \$home/plugins
         cmd:
           - mkdir -p plugins
           - git clone https://github.com/discourse/docker_manager.git
@@ -51,11 +51,11 @@ run:
   #- exec: apt-get -y install whois # for mkpasswd
   ## Use only one of the following lines:
   #- exec: /usr/sbin/usermod -p 'PASSWORD_HASH' root
-  #- exec: /usr/sbin/usermod -p "$(mkpasswd -m sha-256 'RAW_PASSWORD')" root
+  #- exec: /usr/sbin/usermod -p "\$(mkpasswd -m sha-256 'RAW_PASSWORD')" root
 
   ## If you want to authorized additional users, uncomment and change:
   #- exec: ssh-import-id username
   #- exec: ssh-import-id anotherusername
 
   - exec: echo "End of custom commands"
-  - exec: awk -F\# '{print $1;}' ~/.ssh/authorized_keys | awk 'BEGIN { print "Authorized SSH keys for this container:"; } NF>=2 {print $NF;}'
+  - exec: awk -F\# '{print \$1;}' ~/.ssh/authorized_keys | awk 'BEGIN { print "Authorized SSH keys for this container:"; } NF>=2 {print \$NF;}'
